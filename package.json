@@ -1,0 +1,50 @@
+{
+  "name": "websocket-chat",
+  "version": "1.0.0",
+  "description": "A simple websocket server/client illustrating foundational websocket functionalities",
+  "main": "index.js",
+  "scripts": {
+    "debug": "node --nolazy --inspect-brk=9229 node_modules/.bin/tape 'test.js' | tap-format-spec",
+    "report": "nyc report --reporter=text-lcov | coveralls",
+    "test": "run-s test:*",
+    "test:deps": "dependency-check package.json --missing --unused --no-dev -i dom-event-handler",
+    "test:lint": "standard --verbose | snazzy",
+    "test:browser": "run-p browser:*",
+    "test:node": "run-p test-server node:tests",
+    "browser:server": "run-s test-server",
+    "browser:tests": "browserify test/index.js | tape-run | tap-format-spec",
+    "node:tests": "nyc tape 'test/index.js' | tap-format-spec",
+    "node:server": "run-s test-server",
+    "release": "git push && git push --tags && gh-release && npm publish",
+    "browser": "budo test/index.js --live --open",
+    "test-server": "node ./test/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bcomnes/websocket-chat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bcomnes/websocket-chat/issues"
+  },
+  "homepage": "https://github.com/bcomnes/websocket-chat#readme",
+  "devDependencies": {
+    "@tap-format/spec": "^0.2.0",
+    "browserify": "^16.2.3",
+    "budo": "^11.5.0",
+    "coveralls": "^3.0.0",
+    "dependency-check": "^3.1.0",
+    "dom4": "^2.1.3",
+    "existy": "^1.0.1",
+    "gh-release": "^3.4.0",
+    "jsdom": "^13.0.0",
+    "npm-run-all": "^4.0.2",
+    "nyc": "^13.1.0",
+    "snazzy": "^8.0.0",
+    "standard": "^12.0.1",
+    "tape": "^4.7.0",
+    "tape-run": "^4.0.0"
+  }
+}
