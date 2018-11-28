@@ -17,7 +17,8 @@
     "node:server": "run-s test-server",
     "release": "git push && git push --tags && gh-release && npm publish",
     "browser": "budo test/index.js --live --open",
-    "test-server": "node ./test/server.js"
+    "test-server": "node ./test/server.js",
+    "start": "node ./server/start-server.js"
   },
   "repository": {
     "type": "git",
