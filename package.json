@@ -10,7 +10,7 @@
     "test": "run-s test:*",
     "test:deps": "dependency-check package.json --missing --unused --no-dev -i dom-event-handler",
     "test:lint": "standard --verbose | snazzy",
-    "test:node": "tape 'server/**/*.test.js' | tap-format-spec",
+    "test:node": "nyc tape 'server/**/*.test.js' | tap-format-spec",
     "browser:server": "run-s test-server",
     "browser:tests": "browserify test/index.js | tape-run | tap-format-spec",
     "node:tests": "nyc tape 'test/index.js' | tap-format-spec",
