@@ -9,8 +9,7 @@
     "test": "run-s test:*",
     "test:deps": "dependency-check package.json --missing --unused --no-dev -i dom-event-handler",
     "test:lint": "standard --verbose | snazzy",
-    "test:browser": "run-p browser:*",
-    "test:node": "run-p test-server node:tests",
+    "test:node": "tape 'server/**/*.test.js' | tap-format-spec",
     "browser:server": "run-s test-server",
     "browser:tests": "browserify test/index.js | tape-run | tap-format-spec",
     "node:tests": "nyc tape 'test/index.js' | tap-format-spec",
@@ -46,5 +45,9 @@
     "standard": "^12.0.1",
     "tape": "^4.7.0",
     "tape-run": "^4.0.0"
+  },
+  "dependencies": {
+    "nanobus": "^4.3.5",
+    "universal-reconnecting-websocket": "^2.0.0"
   }
 }
