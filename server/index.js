@@ -9,10 +9,27 @@ function createServer (opts, cb = () => {}) {
     return 'client-' + Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
   }
 
+  function noop () {}
+
+  function heartbeat () {
+    this.isAlive = true
+  }
+
+  const interval = setInterval(function ping () {
+    wss.clients.forEach(function each (ws) {
+      if (ws.isAlive === false) return ws.terminate()
+
+      ws.isAlive = false
+      ws.ping(noop)
+    })
+  }, 30000)
+
   const wss = new WebSocket.Server(opts, cb)
 
   wss.on('connection', (ws, req) => {
     ws.name = randomName()
+    ws.isAlive = true
+    ws.on('pong', heartbeat)
     ws.on('message', function incoming (message) {
       let data
       try {
@@ -76,6 +93,7 @@ function createServer (opts, cb = () => {}) {
 
   wss.on('close', () => {
     console.log('server closed')
+    clearInterval(interval)
   })
 
   wss.on('error', console.log)
