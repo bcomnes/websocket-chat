@@ -1,14 +1,15 @@
 // See the following URL for server API docs
 // https://github.com/websockets/ws/blob/master/doc/ws.md
+const WebSocket = require('ws')
 
-function createServer (cb = () => {}) {
-  const WebSocket = require('ws')
+function createServer (opts, cb = () => {}) {
+  opts = Object.assign({ port: 8080, clientTracking: true }, opts)
 
   function randomName () {
     return 'client-' + Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
   }
 
-  const wss = new WebSocket.Server({ port: 8080, clientTracking: true }, cb)
+  const wss = new WebSocket.Server(opts, cb)
 
   wss.on('connection', (ws, req) => {
     ws.name = randomName()
