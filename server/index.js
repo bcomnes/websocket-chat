@@ -61,6 +61,7 @@ function createServer (opts, cb = () => {}) {
   function handleMessage (ws, data) {
     switch (data.action) {
       case 'echo': {
+        console.log(`${ws.name} - echo - ${data.echo}`)
         ws.send(JSON.stringify({
           type: 'echo',
           echo: data.echo
@@ -68,6 +69,7 @@ function createServer (opts, cb = () => {}) {
         break
       }
       case 'message': {
+        console.log(`${ws.name} - message - ${data.msg}`)
         wss.broadcast(JSON.stringify({
           type: 'message',
           msg: data.msg,
@@ -76,6 +78,7 @@ function createServer (opts, cb = () => {}) {
         break
       }
       case 'name': {
+        console.log(`${ws.name} - name - ${data.name}`)
         ws.name = data.name
         ws.send(JSON.stringify({
           type: 'name',
